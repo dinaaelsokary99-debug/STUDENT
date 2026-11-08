@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>STUDENT</title>
+</head>
+<body>
+    <script>
+        class Student {
+  constructor(id, name, grades, attendance) {
+    this.id = id;
+    this.name = name;
+    this.grades = grades;
+    this.attendance = attendance;
+  }
+
+  getAverage() {
+    const sum = this.grades.reduce((total, g) => total + g, 0);
+    return sum / this.grades.length;
+  }
+
+  getLetter(avg) {
+    if (avg >= 90) return "A";
+    else if (avg >= 80) return "B";
+    else if (avg >= 70) return "C";
+    else if (avg >= 60) return "D";
+    else if (avg >= 50) return "E";
+    else return "F";
+  }
+
+  getResult(avg) {
+    return avg >= 50 && this.attendance >= 75 ? "ناجح" : "يحتاج مراجعة";
+  }
+}
+
+const studentsList = [
+  new Student(1, "دينا", [90, 85, 95], 90),
+  new Student(2, "مسك", [70, 65, 80], 80),
+  new Student(3, "لؤي", [45, 40, 48], 70),
+  new Student(4, "محمد", [42, 47, 44], 85),
+];
+
+const struggling = studentsList.filter((s) => {
+  const avg = s.getAverage();
+  return avg >= 40 && avg <= 49;
+});
+
+const curved = struggling.map((s) => ({
+  name: s.name,
+  newAverage: s.getAverage() + 5,
+}));
+
+const total = curved.reduce((sum, s) => sum + s.newAverage, 0);
+const curvedAverage = curved.length > 0 ? total / curved.length : 0;
+
+studentsList.forEach((s) => {
+  const avg = s.getAverage();
+  console.log(
+    `الاسم: ${s.name} | المتوسط: ${avg.toFixed(1)} | التقدير: ${s.getLetter(avg)} | النتيجة: ${s.getResult(avg)}`
+  );
+});
+
+console.log("الطلاب المتعثرين بعد الرأفة:", curved);
+console.log("متوسط المتعثرين بعد التعديل:", curvedAverage.toFixed(1));
+    </script>
+</body>
+</html>
