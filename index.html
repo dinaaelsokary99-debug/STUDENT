@@ -62,6 +62,12 @@ studentsList.forEach((s) => {
 
 console.log("الطلاب المتعثرين بعد الرأفة:", curved);
 console.log("متوسط المتعثرين بعد التعديل:", curvedAverage.toFixed(1));
+document.body.innerHTML = "<pre dir='rtl'>" +
+  studentsList.map((s) => {
+    const avg = s.getAverage();
+    return `الاسم: ${s.name} | المتوسط: ${avg.toFixed(1)} | التقدير: ${s.getLetter(avg)} | النتيجة: ${s.getResult(avg)}`;
+  }).join("\n") +
+  `\n\nمتوسط المتعثرين بعد التعديل: ${curvedAverage.toFixed(1)}</pre>`;
     </script>
 </body>
 </html>
